@@ -9,7 +9,7 @@ import DPS
 
 rebuildCache = True
 
-# If you want to hardcode username and password in the script, do it here
+# If you want to hardcode username and password in the script, do it here and comment out the prompt below
 LDAP_USER = ''
 LDAP_PASS = ''
 
