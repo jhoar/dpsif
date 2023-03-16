@@ -32,13 +32,13 @@ MD_HKPROD_TODATE = 'Data.DateTimeRange.ToDate'
 MD_HKPROD_FILENAMES = 'Data.HKTMContainer.File.FileName'
 
 # RAW HK
-MD_RAWHK_FILENAME = 'Data.File.DataContainer.FileName'
+MD_RAWHK_FILENAME = 'Data.File.FileName'
 
 # RAW Science
-MD_RAWSCI_FILENAME = 'Data.File.DataContainer.FileName'
+MD_RAWSCI_FILENAME = 'Data.File.FileName'
 
 # QLA
-MD_QLAREP_FILENAME = 'Data.File.DataContainer.FileName'
+MD_QLAREP_FILENAME = 'Data.File.FileName'
 
 # Filters
 FL_VALID_DATA = 'Header.ManualValidationStatus!=INVALID'
