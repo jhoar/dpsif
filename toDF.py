@@ -9,7 +9,7 @@ import DPS
 
 # If you want to hardcode username and password in the script, do it here and comment out the prompt below
 LDAP_USER = ''
-LDAP_PASS = '!01'
+LDAP_PASS = ''
 
 # No hardcoded values, so prompt user
 LDAP_USER = input('LDAP username: ')
