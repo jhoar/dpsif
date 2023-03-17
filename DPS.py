@@ -55,7 +55,7 @@ def queryToFrame(product, criteria, output, LDAP_USER, LDAP_PASS):
     url = generateUrl(product=product, criteria=criteria, output=output)
     response = request(url, LDAP_USER, LDAP_PASS)
 
-    df = pd.DataFrame(columns=dfHeaders(output))
+    df = pd.DataFrame(columns=output)
 
     skipFirst = True
     for lines in response.splitlines():
@@ -75,7 +75,7 @@ def queryToFile(outFile, product, criteria, output, LDAP_USER, LDAP_PASS):
     response = request(url, LDAP_USER, LDAP_PASS)
 
     # Build pandas compatible header
-    header = ','.join(dfHeaders(output))
+    header = ','.join(output)
 
     with open(outFile,'w') as dps_file:
         skipFirst = True
@@ -125,12 +125,6 @@ def getEASTime(time):
                         'minute': tt.tm_min,
                         'second': tt.tm_sec})
 
-# Convert a list of fieldnames to a pandas compatible list
-def dfHeaders(colList):
-    return [toPandas(i) for i in colList]
-
-# Strip out dots from field names typically returned from DPS queries
-# This is needed because the dots in the csv header returned from a DPS query cinflicts with Pandas
-# and the backticks needed in dataframe queries can't be applied to strings passed in as variables
+# Generate a DF query compatible column name
 def toPandas(field):
-    return field.replace('.','')
+    return '`' + field + '`' 

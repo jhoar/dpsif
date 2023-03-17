@@ -53,7 +53,7 @@ hkProdOutput = {
     'dpd': DPS.CL_LE1_HKTM, 
     'criteria': hkcriteria, 
     'fields': [DPS.MD_CREATION_DATE, DPS.MD_DATASET, DPS.MD_HKPROD_FROMDATE, DPS.MD_HKPROD_TODATE, DPS.MD_HKPROD_FILENAMES],
-    'filter': DPS.toPandas(DPS.MD_DATASET) + "=='TEST'"  # Filter the dataframe
+    'filter': DPS.toPandas(DPS.MD_DATASET) + "=='TEST'"  # Filter the dataframe, and remember to convert columm name in query
     }
 
 qlaOutput = {
@@ -78,7 +78,7 @@ rawSciOutput = {
     }
 
 allData = [visOutput, nispOutput, hkProdOutput, qlaOutput, rawHkOutput, rawSciOutput]
-# allData = [rawSciOutput]
+#allData = [rawSciOutput]
 
 for data in allData:
     filename = 'sovt2_' + data['dpd'] + '.csv'
