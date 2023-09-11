@@ -135,7 +135,7 @@ timerange = pv
 
 # Timeline.generateHmsFiles(timerange, ares_ids)
 master = Timeline.generateMasterTimeline(timerange, ares_ids, timerange['ossFile'], oss_ids)
-Timeline.generateProducts(master, HMS.getFilename('master', startyear=timerange['startyear'], 
+Timeline.generateCsvFromTimeline(master, HMS.getFilename('master', startyear=timerange['startyear'], 
                             startdoy=timerange['startdoy'], 
                             endyear=timerange['endyear'], 
                             enddoy=timerange['enddoy'], extension=".csv"))

@@ -52,25 +52,6 @@ def generateTimeline(id, startyear, startdoy, endyear, enddoy, calibrate=False):
 
     return timeSeries
 
-def generateProducts(master, filename):
-
-    with open(filename, "w") as outfile:
-
-        line = [ 'time' ]
-
-        first = list(master.keys())[0]
-        for id in master[first]:
-            line.append(id)
-
-        outfile.write(','.join(line) + "\n")
-
-        for timeStamp in master:
-            line = [ ]
-            for id in master[timeStamp]:
-                line.append(str(master[timeStamp][id]))
-
-            outfile.write(','.join(line) + "\n")
-
 def generateMasterTimeline(timerange, ares_ids, ossFile, oss_ids):
 
     hmsTimeSeries = {}
@@ -198,5 +179,24 @@ def generateHmsTimeline(timerange, ares_ids):
         del master[ts]
 
     return master
+
+def generateCsvFromTimeline(master, filename):
+
+    with open(filename, "w") as outfile:
+
+        line = [ 'time' ]
+
+        first = list(master.keys())[0]
+        for id in master[first]:
+            line.append(id)
+
+        outfile.write(','.join(line) + "\n")
+
+        for timeStamp in master:
+            line = [ ]
+            for id in master[timeStamp]:
+                line.append(str(master[timeStamp][id]))
+
+            outfile.write(','.join(line) + "\n")
 
 

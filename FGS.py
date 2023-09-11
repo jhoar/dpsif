@@ -247,11 +247,5 @@ timerange = pvrestart
 
 Timeline.generateHmsFiles(timerange, ares_ids)
 master = Timeline.generateHmsTimeline(timerange, ares_ids)
-# Timeline.generateProducts(master, HMS.getFilename('master', 
-#                             startyear=timerange['startyear'], 
-#                             startdoy=timerange['startdoy'], 
-#                             endyear=timerange['endyear'], 
-#                             enddoy=timerange['enddoy'], 
-#                             extension=".csv"))
 
 generateReportFullTimeline(master, timerange)
