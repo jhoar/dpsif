@@ -7,7 +7,15 @@ OSS_icr_SOVT2_94H_v13_short.xml.dat
 data.json
 oss.csv
 oss.json
+db
+OK
+NOK
 db/*
 OK/*
 NOK/*
+__pycache__
 __pycache__/*
+.ipynb_checkpoints
+.ipynb_checkpoints/*
+flagged
+flagged/*
