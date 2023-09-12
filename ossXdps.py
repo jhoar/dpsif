@@ -3,14 +3,19 @@ from datetime import date
 from datetime import timedelta
 
 import os.path
-
+import getpass
 import pandas as pd
 
 import DPS
 import OSS
 
-LDAP_USER = 'jhoar'
-LDAP_PASS = 'J4nn4k4r!01'
+# If you want to hardcode username and password in the script, do it here and comment out the prompt below
+LDAP_USER = ''
+LDAP_PASS = ''
+
+# No hardcoded values, so prompt user
+LDAP_USER = input('LDAP username: ')
+LDAP_PASS = getpass.getpass(prompt='LDAP password: ')
 
 rebuildCache = True
 

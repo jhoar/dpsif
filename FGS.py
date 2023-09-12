@@ -1,7 +1,7 @@
 import Timeline
 import HMS
 import math
-import datetime
+from datetime import datetime, timezone
 from astropy.time import Time
 import matplotlib.pyplot as plt
 import matplotlib.pylab as pylab
@@ -19,8 +19,8 @@ def writeSeries(state, mode, t0, ts, xs, ys, zs, sxs, sys, szs, ms, cs, sizes, m
 
     mjd = Time(t0)
     mjd.format = 'mjd'
-    utc = t0.astimezone(datetime.timezone.utc)
-    name = '_OUT_' + utc.strftime('%Y-%m-%dT%H-%M-%SZ') + "_" + state + "_" + mode + '.txt'
+    utc = t0.astimezone(timezone.utc)
+    name = 'ts/' + '_OUT_' + utc.strftime('%Y-%m-%dT%H-%M-%SZ') + "_" + state + "_" + mode + '.txt'
 
     with open(name, "w") as outfile:
         outfile.write('mjd,utc,x,y,z,m,prev_mode,mode,track\n')
@@ -28,7 +28,7 @@ def writeSeries(state, mode, t0, ts, xs, ys, zs, sxs, sys, szs, ms, cs, sizes, m
         for i in range(n_rows):
             mjd = Time(ts[i])
             mjd.format = 'mjd'
-            utc = ts[i].astimezone(datetime.timezone.utc)
+            utc = ts[i].astimezone(timezone.utc)
 
             outfile.write(str(mjd) + ',' + utc.strftime('%Y-%m-%dT%H:%M:%SZ') + ',' + str(xs[i]) + ',' + str(ys[i]) + ',' + str(zs[i]) + ',' + str(ms[i]) + ',' + str(pmodes[i]) + ',' + str(modes[i]) + ',' + str(tracks[i]) + '\n')
 
@@ -36,7 +36,7 @@ def plotSeries(state, mode, t0, ts, xs, ys, zs, sxs, sys, szs, ms, cs, sizes, mo
 
     mjd = Time(t0)
     mjd.format = 'mjd'
-    utc = t0.astimezone(datetime.timezone.utc)
+    utc = t0.astimezone(timezone.utc)
     name =  '_OUT_' + utc.strftime('%Y-%m-%dT%H-%M-%SZ') + "_" + state + "_" + mode + '.png'
 
     params = {
@@ -71,7 +71,7 @@ def plotSeries(state, mode, t0, ts, xs, ys, zs, sxs, sys, szs, ms, cs, sizes, mo
 
     plt.close()
 
-def generateReportFullTimeline(master, timerange):
+def generateReportFullTimeline(master, start, end):
 
     prev_mode = ""
     t = 0
@@ -108,7 +108,7 @@ def generateReportFullTimeline(master, timerange):
         track = row['FGS_OPMODE_FAAT2010']
         mode = row['DB_AOCS_AHK_SUBSTATE_APPT0838']
 
-        dt = datetime.datetime.fromtimestamp(timeStamp)
+        dt = datetime.fromtimestamp(timeStamp, tz=timezone.utc)
 
         if mode == "SCM_SO": 
             if prev_mode != "SCM_SO":
@@ -204,11 +204,7 @@ def generateReportFullTimeline(master, timerange):
             pmodes.clear()
             tracks.clear()
             
-
         prev_mode = mode
-
-
-
 
 ares_ids = [
     (8308, 'FGS_OPMODE_FAAT2010', True), 
@@ -219,33 +215,24 @@ ares_ids = [
 ] 
 
 pv_001 = {
-    'startyear': 2023,
-    'endyear': 2023,
-    'startdoy': 215,
-    'enddoy': 224,
+    'start': datetime(2023, 8, 3, tzinfo=timezone.utc),
+    'end': datetime(2023, 8, 12, tzinfo=timezone.utc),
     'ossFile': 'pv\OSS_COMMISSIONING_20230803T040000-20230816T231915_005.xml'
 }
 
 pv = {
-    'startyear': 2023,
-    'endyear': 2023,
-    'startdoy': 224,
-    'enddoy': 240,
+    'start': datetime(2023, 8, 12, tzinfo=timezone.utc),
+    'end': datetime(2023, 8, 28, tzinfo=timezone.utc),
     'ossFile': 'pv\OSS_PV_20230812T000000-20230819T104213_006.xml'
 }
 
 pvrestart = {
-    'startyear': 2023,
-    'endyear': 2023,
-    'startdoy': 243,
-    'enddoy': 249,
+    'start': datetime(2023, 8, 31, tzinfo=timezone.utc),
+    'end': datetime(2023, 9, 6, tzinfo=timezone.utc),
     'ossFile': 'pv\OSS_PV_20230812T000000-20230819T104213_006.xml'
 }
 
-
 timerange = pvrestart
 
-Timeline.generateHmsFiles(timerange, ares_ids)
-master = Timeline.generateHmsTimeline(timerange, ares_ids)
-
-generateReportFullTimeline(master, timerange)
+master = Timeline.generate(timerange['start'], timerange['end'], ares_ids, force=False)
+generateReportFullTimeline(master, timerange['start'], timerange['end'])

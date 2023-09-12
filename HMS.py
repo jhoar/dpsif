@@ -18,8 +18,8 @@ def getKey():
     except requests.exceptions.HTTPError as err:
         raise SystemExit(err)
 
-
-def requestDOYRange(key, id, startyear, startdoy, endyear, enddoy, calibrate=True):
+# This should be deleted
+def request(key, id, startyear, startdoy, endyear, enddoy, calibrate=True):
 
     start = datetime.datetime.strptime(str(startyear) + ' ' +  str(startdoy), '%Y %j')
     end = datetime.datetime.strptime(str(endyear) + ' ' +  str(enddoy), '%Y %j')
@@ -39,29 +39,10 @@ def requestDOYRange(key, id, startyear, startdoy, endyear, enddoy, calibrate=Tru
     except requests.exceptions.HTTPError as err:
         raise SystemExit(err)
     
-def requestDOY(key, id, year, doy, calibrate=True):
-
-    start = datetime.datetime.strptime(str(year) + ' ' +  str(doy), '%Y %j')
-    end = datetime.datetime.strptime(str(year) + ' ' +  str(doy), '%Y %j')
-
-    header = {'Authorization': key}
-    content = 'key=id&values=' + str(id) + "&from=" + str(start) + "&to=" + str(end)
-
-    if calibrate is True:
-        url = urlprefix + content + urlsuffix + '&calibrate=true'
-    else:
-        url = urlprefix + content + urlsuffix + '&calibrate=false'
-
-    try: 
-        response = requests.get(url, headers=header)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.HTTPError as err:
-        raise SystemExit(err)
-    
+# This should be deleted
 def getFilenameDOYRange(id, startyear, startdoy, endyear, enddoy, extension='.json'):
     return 'db/' + str(id) + "-" + str(startyear) + "-" + str(startdoy) + "-" + str(endyear) + "-" + str(enddoy) + extension
 
-def getFilenameDOY(id, startyear, startdoy, extension='.json'):
-    return 'db/' + str(id) + "-" + str(startyear) + "-" + str(startdoy) + extension
+def getFilenameDOY(id, year, doy, extension='.json'):
+    return 'db/' + str(id) + "-" + str(year) + "-" + str(doy) + extension
 
